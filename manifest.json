@@ -1,0 +1,20 @@
+  {
+    "name": "Watch on BitChute",
+    "version": "1.0",
+    "description": "Watch as many videos as possible on BitChute",
+    "manifest_version": 2,
+    "content_scripts": [
+        {
+            "matches": ["https://*.youtube.com/*"],
+            "css": ["content.css"],
+            "js": ["content.js"]
+        } 
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "*://*.bitchute.com/"
+    ]
+  }

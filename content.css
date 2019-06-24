@@ -1,0 +1,10 @@
+.wiobc-button {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 5px 0;
+    text-decoration: none;
+    color: white;
+    background-color: navy;
+    font-weight: normal;
+}
