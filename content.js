@@ -8,8 +8,6 @@ let videoLinks = [];
 let fetchedCount = 0;
 // If links are currently being loaded
 let loadingLinks = false;
-// Current location
-let currentLocation = window.location.href;
 
 /**
  * Load BitChute links onto the page
@@ -100,31 +98,28 @@ function insertAfter(element, referenceNode) {
 
 // Load BitChute links
 loadBitChuteLinks();
-// Check for more videos every 500ms
-function checkLoad() {
-    if( !loadingLinks ) {
-        if( currentLocation != window.location.href ) {
-            currentLocation = window.location.href;
-            // Remove current buttons
-            let buttons = document.querySelectorAll(".wiobc-button");
-            for(let i=0; i<buttons.length;i++) {
-                buttons[i].parentElement.removeChild(buttons[i]);
-            }
-            doneVideoLinks = [];
-            // We have to delay here since YouTube updates the location before the title
-            // and we can get incorrect links
-            // Basically waiting for page load (at least partial). 1s should be enough.
-            setTimeout(loadBitChuteLinks, 1000); 
-            setTimeout(checkLoad, 1500);
-        }
-        else {
-            loadBitChuteLinks();
-            setTimeout(checkLoad, 500);
-        }
-    }
-    else {
-        setTimeout(checkLoad, 500);
-    }
-}
+let interval = setInterval(loadBitChuteLinks, 500);
 
-checkLoad();
+// Listen for page reloads
+document.body.addEventListener("yt-navigate-finish", function(event) {
+    // Remove current buttons
+    let buttons = document.querySelectorAll(".wiobc-button");
+    for(let i=0; i<buttons.length;i++) {
+        buttons[i].parentElement.removeChild(buttons[i]);
+    }
+    doneVideoLinks = [];
+
+    setTimeout(loadBitChuteLinks, 250); // Add a little delay since the event might not have everything loaded (wait for ajax requests to finish)
+
+    // After 250s milliseconds resume interval 
+    setTimeout(function(e) {
+        interval = setInterval(loadBitChuteLinks, 500);
+    }, 250);
+});
+
+// Listen for starting page reloads
+document.body.addEventListener("yt-navigate-start", function(e) {
+    // Once we're reloading, stop the interval looking for links
+    clearInterval(interval);
+});
+
