@@ -24,10 +24,6 @@ function updateBitChuteLink() {
 
 updateBitChuteLink();
 
-// TODO
-// Test working when using the SPA after a while - seems to get weird
-// TODO: Figure out how to update bitchute link async
-
 // Listen for requests to fetch data from BitChute
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
 
