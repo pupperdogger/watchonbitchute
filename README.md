@@ -12,4 +12,4 @@ You need to use a Chromium-based browser (Chrome, Brave, Opera, etc.)
 2. Go to the extensions page on your browser (e.g. chrome://extensions)
 3. Enable Developer mode in the top right corner of the page
 4. Click the "Load unpacked" button
-5. Select the (unzipped) folder you downloaded
+5. Select the (unzipped) folder containing the contents of the repository
